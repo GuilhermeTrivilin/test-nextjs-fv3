@@ -14,8 +14,8 @@ import Script10 from '../scripts/home/Script10'
 export default function(){
 
     return <Head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charSet="utf-8" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
     <Script1 />
     <Script2 />
@@ -28,7 +28,7 @@ export default function(){
 
     <title>Folha Vitória - O Jornal Online do Espírito Santo</title>
 
-    <meta name="description" content="Últimas notícias sobre polícia, entretenimento, política, economia, emprego, concursos e esportes no Espírito Santo, no Brasil e no mundo. Vídeos dos telejornais da TV Vitória." itemprop="description" />
+    <meta name="description" content="Últimas notícias sobre polícia, entretenimento, política, economia, emprego, concursos e esportes no Espírito Santo, no Brasil e no mundo. Vídeos dos telejornais da TV Vitória." itemProp="description" />
 
     <link rel="canonical" href="index.html" />
 

@@ -51,36 +51,36 @@ export default function Home() {
                   <a href="#" title="Veja mais">Navegar</a>
                 </li>
                 <div className="sub_menu_responsible_extra_small"></div>
-                <li className="main-menu" id="item-0" style={{ "border-top-color": "#000" }}>
+                <li className="main-menu" id="item-0" style={{ "borderTopColor": "#000" }}>
                   <a style={{ color: "#000" }} href="http://noticias.r7.com/" title="Ir para o NOTÍCIAS ">NOTÍCIAS</a>
                 </li>
-                <li className="main-menu" id="item-1" style={{ "border-top-color": "#0E8148" }}>
+                <li className="main-menu" id="item-1" style={{ "borderTopColor": "#0E8148" }}>
                   <a style={{ "color": "#0E8148" }} href="http://esportes.r7.com/" title="Ir para o ESPORTES ">ESPORTES</a>
                 </li>
-                <li className="main-menu" id="item-2" style={{ "border-top-color": "#F78714" }}>
+                <li className="main-menu" id="item-2" style={{ "borderTopColor": "#F78714" }}>
                   <a style={{ "color": "#F78714" }} href="http://diversao.r7.com/" title="Ir para o DIVERSÃO ">DIVERSÃO</a>
                 </li>
                 <li className="mais mais-small main-menu" onClick={() => window.toggleNavegMenu()}>
                   <a href="#" title="Veja mais">mais</a>
                 </li>
                 <div className="sub_menu_responsible_small"></div>
-                <li className="main-menu" id="item-3" style={{ "border-top-color": "#9C5BB9" }}>
+                <li className="main-menu" id="item-3" style={{ "borderTopColor": "#9C5BB9" }}>
                   <a style={{ color: "#9C5BB9" }} href="http://meuestilo.r7.com/" title="Ir para o MEU ESTILO ">MEU ESTILO</a>
                 </li>
                 <li className="mais mais-medium main-menu" onClick={() => window.toggleNavegMenu()}>
                   <a href="#" title="Veja mais">mais</a>
                 </li>
                 <div className="sub_menu_responsible_medium"></div>
-                <li className="main-menu" id="item-4" style={{ "border-top-color": "#6B7982" }}>
+                <li className="main-menu" id="item-4" style={{ "borderTopColor": "#6B7982" }}>
                   <a style={{ color: "#6B7982" }} href="https://www.r7.com/tudo-do-r7/todos-os-blogs" title="Ir para o BLOGS ">BLOGS</a>
                 </li>
-                <li className="main-menu" id="item-5" style={{ "border-top-color": "#2e50cb" }}>
+                <li className="main-menu" id="item-5" style={{ "borderTopColor": "#2e50cb" }}>
                   <a style={{ color: "#2e50cb" }} href="http://recordtv.r7.com/" title="Ir para o RECORD TV ">RECORD TV</a>
                 </li>
-                <li className="main-menu" id="item-6" style={{ "border-top-color": "#007cd7" }}>
+                <li className="main-menu" id="item-6" style={{ "borderTopColor": "#007cd7" }}>
                   <a style={{ color: "#007cd7" }} href="http://tv.r7.com/" title="Ir para o VÍDEOS ">VÍDEOS</a>
                 </li>
-                <li className="main-menu" id="item-7" style={{ "border-top-color": "#6b7982" }}>
+                <li className="main-menu" id="item-7" style={{ "borderTopColor": "#6b7982" }}>
                   <a style={{ color: "#6b7982" }} href="https://www.r7.com/servicos" title="Ir para o SERVIÇOS ">SERVIÇOS</a>
                 </li>
               </ul>
@@ -1202,8 +1202,8 @@ export default function Home() {
           </div>
         </div>
       </header>
-      <div style={{ display: "none", width: "auto", height: "auto", position: "fixed", bottom: 0, left: "50%", transform: "translate(-50%)", "z-index": "9999998", cursor: "pointer" }}>
-        <button onClick={() => this.parentNode.style.display = 'none'} style={{ position: "absolute", top: "-24px", right: 0, height: "25px", width: "25px", cursor: "pointer", "z-index": "9999999999", background: "#fff", border: "1px solid #ccc", padding: "0 0 0 1px", color: "#666" }}>X</button>
+      <div style={{ display: "none", width: "auto", height: "auto", position: "fixed", bottom: 0, left: "50%", transform: "translate(-50%)", "zIndex": "9999998", cursor: "pointer" }}>
+        <button onClick={() => this.parentNode.style.display = 'none'} style={{ position: "absolute", top: "-24px", right: 0, height: "25px", width: "25px", cursor: "pointer", "zIndex": "9999999999", background: "#fff", border: "1px solid #ccc", padding: "0 0 0 1px", color: "#666" }}>X</button>
         {/* DANDO ERRO E ESTOURANDO TELA BRANCA NO SITE */}
         {/* <div id="stickybottom-r7">
             <Script12 />
