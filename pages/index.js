@@ -11,7 +11,6 @@ import Header from '../components/Header.js';
 import Card01 from '../components/cards/Card01.js';
 import Card02 from '../components/cards/Card02.js';
 
-import RicardFrizeraImage from '../assets/images/social-column/ricardo-frizera.png'
 import Card03 from '../components/cards/Card03.js';
 
 const defaultSegments = [
@@ -348,7 +347,7 @@ export default function Home() {
                       <div className="card-title">
                         <a href="#" className="button-more-click"></a>
                         <div className="social-profile">
-                          <img src="/assets/images/social-column/ricardo-frizera.png" alt="ricardo-frizera" className="avatar" /> <span>MUNDO BUSINESS</span>
+                          <img src="https://www.folhavitoria.com.br/assets/images/social-column/ricardo-frizera.png" alt="ricardo-frizera" className="avatar" /> <span>MUNDO BUSINESS</span>
                           <h3><a href="https://www.folhavitoria.com.br/economia/mundo-business/">Ricardo Frizera</a></h3>
                         </div>
                         <h2><a href="https://www.folhavitoria.com.br/economia/mundo-business/" target="_blank">Usina fotovoltaica no ES pode abastecer mais de 2 mil residências</a></h2>
@@ -361,7 +360,7 @@ export default function Home() {
                       <div className="card-title">
                         <a href="#" className="button-more-click"></a>
                         <div className="social-profile">
-                          <img src="assets/images/social-column/helio.png" alt="helio" className="avatar" /> <span>COLUNA SOCIAL</span>
+                          <img src="https://www.folhavitoria.com.br/assets/images/social-column/helio.png" alt="helio" className="avatar" /> <span>COLUNA SOCIAL</span>
                           <h3><a href="https://www.folhavitoria.com.br/social/helio-dorea/">Helio Dórea</a></h3>
                         </div>
                         <h2><a href="https://www.folhavitoria.com.br/social/helio-dorea/" target="_blank">Franco Bortoluzzi reúne amigos para almoço e degustação de vinhos</a></h2>
@@ -374,7 +373,7 @@ export default function Home() {
                       <div className="card-title">
                         <a href="#" className="button-more-click"></a>
                         <div className="social-profile">
-                          <img src="assets/images/social-column/andrea.png" alt="andrea" className="avatar" /> <span>COLUNA SOCIAL</span>
+                          <img src="https://www.folhavitoria.com.br/assets/images/social-column/andrea.png" alt="andrea" className="avatar" /> <span>COLUNA SOCIAL</span>
                           <h3><a href="https://www.folhavitoria.com.br/social/andreapena/">Andrea Pena</a></h3>
                         </div>
                         <h2><a href="https://www.folhavitoria.com.br/social/andreapena/" target="_blank">Flavia Abaurre celebra 50 anos em condomínio construído pela família</a></h2>
@@ -556,7 +555,7 @@ export default function Home() {
                       <div className="card-theme card-model-social-column-clean ga-event-track" data-ga-event-label="editories/economia_column/01">
                         <div className="card-title">
                           <div className="column-description">
-                            <img src="assets/images/social-column/data-business-profile.png" alt="data-business-profile" className="avatar" /> <span><a href="http://www.folhavitoria.com.br/economia/data-business/" target="_self">Luan Sperandio</a></span>
+                            <img src="https://www.folhavitoria.com.br/assets/images/social-column/data-business-profile.png" alt="data-business-profile" className="avatar" /> <span><a href="http://www.folhavitoria.com.br/economia/data-business/" target="_self">Luan Sperandio</a></span>
                             <h2><a href="http://www.folhavitoria.com.br/economia/data-business/" target="_self">As escolas deveriam reabrir apenas após a vacinação das crianças?</a></h2>
                           </div>
                         </div>
@@ -564,7 +563,7 @@ export default function Home() {
                       <div className="card-theme card-model-social-column-clean ga-event-track" data-ga-event-label="editories/economia_column/02">
                         <div className="card-title">
                           <div className="column-description">
-                            <img src="assets/images/social-column/agro-business-profile.png" alt="agro-business-profile" className="avatar" /> <span><a href="https://www.folhavitoria.com.br/economia/agro-business" target="_self">Stefany Sampaio</a></span>
+                            <img src="https://www.folhavitoria.com.br/assets/images/social-column/agro-business-profile.png" alt="agro-business-profile" className="avatar" /> <span><a href="https://www.folhavitoria.com.br/economia/agro-business" target="_self">Stefany Sampaio</a></span>
                             <h2><a href="https://www.folhavitoria.com.br/economia/agro-business" target="_self">Agro é responsável por 35,9% da movimentação econômica do cooperativismo capixaba</a></h2>
                           </div>
                         </div>
@@ -591,7 +590,7 @@ export default function Home() {
                       <div className="card-theme card-model-social-column-clean ga-event-track" data-ga-event-label="editories/economia_column/05">
                         <div className="card-title">
                           <div className="column-description">
-                            <img src="assets/images/social-column/mercado-diario-profile.png" alt="mercado-diario-profile" className="avatar" /> <span><a href="https://www.folhavitoria.com.br/economia/mercado-diario" target="_self">Vinicius Torres</a></span>
+                            <img src="https://www.folhavitoria.com.br/assets/images/social-column/mercado-diario-profile.png" alt="mercado-diario-profile" className="avatar" /> <span><a href="https://www.folhavitoria.com.br/economia/mercado-diario" target="_self">Vinicius Torres</a></span>
                             <h2><a href="https://www.folhavitoria.com.br/economia/mercado-diario" target="_self">Como as eleições vão influenciar a bolsa?</a></h2>
                           </div>
                         </div>
@@ -599,7 +598,7 @@ export default function Home() {
                       <div className="card-theme card-model-social-column-clean ga-event-track" data-ga-event-label="editories/economia_column/06">
                         <div className="card-title">
                           <div className="column-description">
-                            <img src="assets/images/social-column/financas-de-a-a-z-profile.png" alt="financas-de-a-a-z-profile" className="avatar" /> <span><a href="https://www.folhavitoria.com.br/economia/financas-de-a-a-z" target="_self">Ana Porto</a></span>
+                            <img src="https://www.folhavitoria.com.br/assets/images/social-column/financas-de-a-a-z-profile.png" alt="financas-de-a-a-z-profile" className="avatar" /> <span><a href="https://www.folhavitoria.com.br/economia/financas-de-a-a-z" target="_self">Ana Porto</a></span>
                             <h2><a href="https://www.folhavitoria.com.br/economia/financas-de-a-a-z" target="_self">Comece bem 2022: faça sua reserva de emergência</a></h2>
                           </div>
                         </div>
