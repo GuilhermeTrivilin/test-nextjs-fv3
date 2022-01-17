@@ -5,10 +5,14 @@ import Script13 from '../components/scripts/home/Script13.js';
 import Script14 from '../components/scripts/home/Script14.js';
 import Script15 from '../components/scripts/home/Script15.js';
 
-import Image from 'next/image'
 import { useEffect, useState } from 'react';
-import { getCoverItems } from '../services/coverItems.js';
+import { getCoverItems, getImageUrl } from '../services/coverItems.js';
 import Header from '../components/Header.js';
+import Card01 from '../components/cards/Card01.js';
+import Card02 from '../components/cards/Card02.js';
+
+import RicardFrizeraImage from '../assets/images/social-column/ricardo-frizera.png'
+import Card03 from '../components/cards/Card03.js';
 
 const defaultSegments = [
   "editories/geral",
@@ -26,12 +30,23 @@ export default function Home() {
 
   const [coverItems, setCoverItems] = useState([])
 
-  useEffect(() => { test() }, [])
+  useEffect(() => { getAllCoverItems() }, [])
 
-  const test = async () => {
+  const getAllCoverItems = async () => {
     const response = await getCoverItems(defaultSegments)
-    console.log(response.data.items)
-    response.success && setCoverItems(response.data.items)
+    setCoverItems(response.data.items)
+  }
+
+  const findPosition = async (position) => {
+    if (coverItems.length === 0) return
+
+    const positionData = coverItems.find(item => item.position === position)
+    const imageUrl = await getImageUrl({ position, crop_hash: positionData.crop_hash })
+
+    return {
+      ...positionData,
+      image: imageUrl
+    }
   }
 
   return (
@@ -333,7 +348,7 @@ export default function Home() {
                       <div className="card-title">
                         <a href="#" className="button-more-click"></a>
                         <div className="social-profile">
-                          <img src="assets/images/social-column/ricardo-frizera.png" alt="ricardo-frizera" className="avatar" /> <span>MUNDO BUSINESS</span>
+                          <img src="/assets/images/social-column/ricardo-frizera.png" alt="ricardo-frizera" className="avatar" /> <span>MUNDO BUSINESS</span>
                           <h3><a href="https://www.folhavitoria.com.br/economia/mundo-business/">Ricardo Frizera</a></h3>
                         </div>
                         <h2><a href="https://www.folhavitoria.com.br/economia/mundo-business/" target="_blank">Usina fotovoltaica no ES pode abastecer mais de 2 mil residências</a></h2>
@@ -392,96 +407,33 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-6 col-lg-5">
-                  <div className="card-theme card-model-1 ga-event-track" data-ga-event-label="editories/geral/01">
-                    <a href="geral/noticia/01/2022/inscricoes-do-nossa-bolsa-2022-terminam-nesta-quarta-feira-veja-quem-pode-participar.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/89fb34c0-72ed-11ec-8ddf-2b9307d5380e--w445_h262_lx0_rx1600_ty70_by1013.jpeg" alt="" /></picture></a>
-                    <div className="card-title title2">
-                      <span className="hat bg-color-geral">GERAL</span>
-                      <h2><a href="geral/noticia/01/2022/inscricoes-do-nossa-bolsa-2022-terminam-nesta-quarta-feira-veja-quem-pode-participar.html" target="_self">Inscrição para 1,3 mil vagas do Nossa Bolsa terminam nesta quarta</a></h2>
-                    </div>
-                  </div>
+                  <Card01 findPosition={findPosition} coverItems={coverItems} position={"editories/geral/01"} />
                 </div>
                 <div className="col-md-6 col-lg-7">
                   <div className="row">
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/geral/02">
-                        <a href="https://www.folhavitoria.com.br/geral/blogs/direito-ao-direito/2022/01/11/empregadas-gestantes-devem-permanecer-em-regime-de-teletrabalho/" className="image-link" target="_blank"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/e1cb1640-e0ce-11eb-8cbf-6fecadd6c335--w116_h116_lx150_rx750_ty0_by600.jpg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-geral">GERAL</span>
-                          </div>
-                          <h2><a href="https://www.folhavitoria.com.br/geral/blogs/direito-ao-direito/2022/01/11/empregadas-gestantes-devem-permanecer-em-regime-de-teletrabalho/" target="_blank">Grávidas devem continuar em home office durante a pandemia. Veja seus direitos!</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/geral/02"} />
                     </div>
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/geral/03">
-                        <a href="geral/noticia/01/2022/saiba-quais-sao-as-marcas-de-cafe-irregulares-apreendidas-em-supermercados-da-grande-vitoria.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/20b754e0-723d-11ec-8407-571205f32322--w116_h116_lx200_rx1400_ty0_by1200.jpeg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-geral">GERAL</span>
-                          </div>
-                          <h2><a href="geral/noticia/01/2022/saiba-quais-sao-as-marcas-de-cafe-irregulares-apreendidas-em-supermercados-da-grande-vitoria.html" target="_self">Saiba quais são as marcas de café irregulares apreendidas na Grande Vitória</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/geral/03"} />
                     </div>
                   </div>
                 </div>
                 <div className="box-content">
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/geral/04">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-geral">GERAL</span>
-                        </div>
-                        <h2><a href="https://www.folhavitoria.com.br/geral/blogs/portugues-em-dia/2022/01/11/dica-do-dia-no-11-pele-vermelha-cara-palida/" target="_blank">Dicas de Português: 'cara-pálida' ou 'cara pálida'? Veja como usar!</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/geral/04"} />
                   </div>
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/geral/05">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-geral">GERAL</span>
-                        </div>
-                        <h2><a href="geral/noticia/01/2022/rio-doce-ultrapassa-nivel-de-inundacao-em-colatina-e-linhares.html" target="_self">Rio Doce ultrapassa nível de inundação em Colatina e Linhares</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/geral/05"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/geral/06">
-                      <a href="geral/noticia/01/2022/rodovia-em-alegre-e-interditada-devido-a-erosao-causada-por-chuvas.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/b4980db0-6b4c-0137-b0b0-6231c35b6685--w240_h140_lx23_rx1257_ty0_by720.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-geral">GERAL</span>
-                        </div>
-                        <h2><a href="geral/noticia/01/2022/rodovia-em-alegre-e-interditada-devido-a-erosao-causada-por-chuvas.html" target="_self">Rodovia em Alegre é interditada devido à erosão</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/geral/06"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/geral/07">
-                      <a href="geral/noticia/01/2022/alerta-de-chuvas-intensas-para-11-cidades-do-es-veja-quais-sao.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/e3e8ce80-5861-11ec-9932-65553fe5efda--w240_h140_lx29_rx1571_ty0_by900.jpeg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-geral">GERAL</span>
-                        </div>
-                        <h2><a href="geral/noticia/01/2022/alerta-de-chuvas-intensas-para-11-cidades-do-es-veja-quais-sao.html" target="_self">Alerta de chuvas intensas para 11 cidades do ES</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/geral/07"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/geral/08">
-                      <a href="geral/noticia/01/2022/incendio-atinge-apartamento-no-bairro-ourimar-na-serra.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/c2788330-72ce-11ec-8813-15a9cbfb3840--w240_h140_lx0_rx553_ty13_by335.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-geral">GERAL</span>
-                        </div>
-                        <h2><a href="geral/noticia/01/2022/incendio-atinge-apartamento-no-bairro-ourimar-na-serra.html" target="_self">VÍDEO | Incêndio atinge apartamento no bairro Ourimar</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/geral/08"} />
                   </div>
                   <div className="card-advertising advertising-section grl-posicao-2 sec-posicao-2">
                     <div className="content-advertising">
@@ -491,40 +443,15 @@ export default function Home() {
                   <div className="col-md-8 col-lg-8">
                     <div className="row">
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/geral/09">
-                          <a href="geral/noticia/01/2022/cozinheira-saia-do-terminal-de-carapina-ao-ser-atropelada-por-onibus-do-transcol.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/1e34dec0-72f8-11ec-b1e9-2b3294357c01--w116_h116_lx280_rx1000_ty0_by720.jpeg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-geral">GERAL</span>
-                            </div>
-                            <h2><a href="geral/noticia/01/2022/cozinheira-saia-do-terminal-de-carapina-ao-ser-atropelada-por-onibus-do-transcol.html" target="_self">Cozinheira saía do Terminal de Carapina ao ser atropelada por ônibus do Transcol</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/geral/09"} />
                       </div>
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/geral/10">
-                          <a href="geral/noticia/01/2022/inscricoes-do-nossa-bolsa-2022-terminam-nesta-quarta-feira-veja-quem-pode-participar.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/89fb34c0-72ed-11ec-8ddf-2b9307d5380e--w116_h116_lx259_rx1342_ty0_by1083.jpeg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-geral">GERAL</span>
-                            </div>
-                            <h2><a href="geral/noticia/01/2022/inscricoes-do-nossa-bolsa-2022-terminam-nesta-quarta-feira-veja-quem-pode-participar.html" target="_self">Inscrição para 1,3 mil vagas do Nossa Bolsa terminam nesta quarta</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/geral/10"} />
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/geral/11">
-                      <a href="geral/noticia/01/2022/adolescente-faz-parto-sozinha-em-casa-diz-que-achou-o-bebe-mas-acaba-revelando-estupro.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/2de5bcb0-72c4-11ec-a268-0dfa19a2f877--w240_h140_lx14_rx786_ty0_by450.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-geral">GERAL</span>
-                        </div>
-                        <h2><a href="geral/noticia/01/2022/adolescente-faz-parto-sozinha-em-casa-diz-que-achou-o-bebe-mas-acaba-revelando-estupro.html" target="_self">Adolescente faz parto sozinha em casa e revela estupro</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/geral/11"} />
                   </div>
                 </div>
               </div>
@@ -552,96 +479,33 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-6 col-lg-5">
-                  <div className="card-theme card-model-1 ga-event-track" data-ga-event-label="editories/entretenimento/01">
-                    <a href="entretenimento/noticia/01/2022/conheca-as-melhores-praias-do-es-para-levar-as-criancas-durante-as-ferias-e-o-verao.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/36d657b0-6f01-11ec-b407-01dd0209baf7--w445_h262_lx0_rx3376_ty118_by2106.jpg" alt="" /></picture></a>
-                    <div className="card-title title2">
-                      <span className="hat bg-color-entretenimento">ENTRETENIMENTO</span>
-                      <h2><a href="entretenimento/noticia/01/2022/conheca-as-melhores-praias-do-es-para-levar-as-criancas-durante-as-ferias-e-o-verao.html" target="_self">Conheça as melhores praias do ES para levar as crianças no verão</a></h2>
-                    </div>
-                  </div>
+                  <Card01 findPosition={findPosition} coverItems={coverItems} position={"editories/entretenimento/01"} />
                 </div>
                 <div className="col-md-6 col-lg-7">
                   <div className="row">
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/entretenimento/02">
-                        <a href="entretenimento/noticia/01/2022/ana-maria-braga-aparece-com-peruca-ruiva-no-mais-voce-e-vira-meme-ao-ser-comparada-com-chucky-o-boneco-assassino.38" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/3e591a20-72fa-11ec-96ee-6f63bd3a0b1a--w116_h116_lx14_rx267_ty13_by266.jpg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-entretenimento">ENTRETENIMENTO</span>
-                          </div>
-                          <h2><a href="entretenimento/noticia/01/2022/ana-maria-braga-aparece-com-peruca-ruiva-no-mais-voce-e-vira-meme-ao-ser-comparada-com-chucky-o-boneco-assassino.38" target="_self">Ana Maria Braga aparece com peruca e vira meme ao ser comparada com Chucky - O Boneco Assassino</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/entretenimento/02"} />
                     </div>
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/entretenimento/03">
-                        <a href="entretenimento/noticia/01/2022/com-fabrica-capixaba-roupa-feita-em-guarapari-e-vendida-para-todo-o-brasil.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/b044c900-7254-11ec-922a-9f129dc523b7--w116_h116_lx0_rx900_ty225_by1125.jpeg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-entretenimento">ENTRETENIMENTO</span>
-                          </div>
-                          <h2><a href="entretenimento/noticia/01/2022/com-fabrica-capixaba-roupa-feita-em-guarapari-e-vendida-para-todo-o-brasil.html" target="_self">Com fábrica capixaba, roupa feita em Guarapari é vendida para todo Brasil</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/entretenimento/03"} />
                     </div>
                   </div>
                 </div>
                 <div className="box-content">
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/entretenimento/04">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-entretenimento">ENTRETENIMENTO</span>
-                        </div>
-                        <h2><a href="entretenimento/noticia/01/2022/serie-documental-sobre-neymar-jr-ganha-trailer-da-netflix.html" target="_self">VÍDEO | Série documental sobre Neymar Jr. ganha trailer da Netflix</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/entretenimento/04"} />
                   </div>
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/entretenimento/05">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-entretenimento">ENTRETENIMENTO</span>
-                        </div>
-                        <h2><a href="https://www.folhavitoria.com.br/entretenimento/resenhando/2022/01/11/a-cara-do-verao-confira-os-hits-nacionais-e-internacionais-que-estao-bombando-no-verao-capixaba/" target="_blank">Confira os hits que estão bombando no verão capixaba</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/entretenimento/05"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/entretenimento/06">
-                      <a href="entretenimento/noticia/01/2022/justin-timberlake-vende-mansao-em-nova-york-por-164-milhoes-de-reais.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/9c1b6910-9a34-0135-84a8-6231c35b6685--w240_h140_lx25_rx735_ty0_by414.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-entretenimento">ENTRETENIMENTO</span>
-                        </div>
-                        <h2><a href="entretenimento/noticia/01/2022/justin-timberlake-vende-mansao-em-nova-york-por-164-milhoes-de-reais.html" target="_self">Justin Timberlake vende mansão em NY por R$ 164 milhões</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/entretenimento/06"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/entretenimento/07">
-                      <a href="entretenimento/noticia/01/2022/festival-de-cerveja-artesanal-gastronomia-e-shows-com-entrada-gratuita-comeca-nesta-quinta-em-vila-velha.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/95df56e0-7243-11ec-8bf2-23599d66c73a--w240_h140_lx0_rx1880_ty79_by1175.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-entretenimento">ENTRETENIMENTO</span>
-                        </div>
-                        <h2><a href="entretenimento/noticia/01/2022/festival-de-cerveja-artesanal-gastronomia-e-shows-com-entrada-gratuita-comeca-nesta-quinta-em-vila-velha.html" target="_self">Festival de cerveja artesanal começa nesta quinta no ES</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/entretenimento/07"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/entretenimento/08">
-                      <a href="https://www.folhavitoria.com.br/entretenimento/blogs/na-balada/2022/01/shows-de-henrique-juliano-e-atitude-67-vao-agitar-guarapari-no-fim-de-semana/" className="image-link" target="_blank"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/d9958780-7223-11ec-a7e7-2d6bca06de11--w240_h140_lx0_rx724_ty67_by489.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-entretenimento">ENTRETENIMENTO</span>
-                        </div>
-                        <h2><a href="https://www.folhavitoria.com.br/entretenimento/blogs/na-balada/2022/01/shows-de-henrique-juliano-e-atitude-67-vao-agitar-guarapari-no-fim-de-semana/" target="_blank">Shows de Henrique & Juliano e Atitude 67 vão agitar Guarapari</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/entretenimento/08"} />
                   </div>
                   <div className="card-advertising advertising-section ent-posicao-2 sec-posicao-2">
                     <div className="content-advertising">
@@ -651,40 +515,15 @@ export default function Home() {
                   <div className="col-md-8 col-lg-8">
                     <div className="row">
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/entretenimento/09">
-                          <a href="entretenimento/noticia/01/2022/luciana-gimenez-se-irrita-com-comentario-sobre-a-sexualidade-do-filho-certa-obsessao-hein.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/8c1b5810-96c0-0138-35c4-0a58a9feac2a--w116_h116_lx0_rx522_ty14_by536.jpg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-entretenimento">ENTRETENIMENTO</span>
-                            </div>
-                            <h2><a href="entretenimento/noticia/01/2022/luciana-gimenez-se-irrita-com-comentario-sobre-a-sexualidade-do-filho-certa-obsessao-hein.html" target="_self">Luciana Gimenez se irrita com comentário sobre a sexualidade do filho</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/entretenimento/09"} />
                       </div>
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/entretenimento/10">
-                          <a href="entretenimento/noticia/01/2022/ex-de-britney-spears-sai-da-prisao-e-causa-panico-ao-espionar-casa-da-mae-da-cantora.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/328bdb60-47b2-11ec-a51f-93ca180e2fd2--w116_h116_lx64_rx382_ty0_by318.jpg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-entretenimento">ENTRETENIMENTO</span>
-                            </div>
-                            <h2><a href="entretenimento/noticia/01/2022/ex-de-britney-spears-sai-da-prisao-e-causa-panico-ao-espionar-casa-da-mae-da-cantora.html" target="_self">Ex de Britney Spears sai da prisão e causa pânico ao espionar casa da mãe</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/entretenimento/10"} />
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/entretenimento/11">
-                      <a href="entretenimento/noticia/01/2022/mojito-de-melancia-aprenda-receita-simples-e-refrescante.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/a89ac4a0-722e-11ec-959a-c7a1af305128--w240_h140_lx0_rx2000_ty79_by1246.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-entretenimento">ENTRETENIMENTO</span>
-                        </div>
-                        <h2><a href="entretenimento/noticia/01/2022/mojito-de-melancia-aprenda-receita-simples-e-refrescante.html" target="_self">Mojito de melancia: aprenda receita simples e refrescante</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/entretenimento/11"} />
                   </div>
                 </div>
               </div>
@@ -734,37 +573,15 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-6 col-lg-5">
-                  <div className="card-theme card-model-1 ga-event-track" data-ga-event-label="editories/economia/01">
-                    <a href="economia/noticia/01/2022/mais-dois-voos-sao-cancelados-no-aeroporto-de-vitoria-nesta-terca.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/881f8430-7dbe-0138-f55c-0a58a9feac2a--w445_h262_lx2_rx1278_ty0_by751.jpeg" alt="" /></picture></a>
-                    <div className="card-title title2">
-                      <span className="hat bg-color-economia">ECONOMIA</span>
-                      <h2><a href="economia/noticia/01/2022/mais-dois-voos-sao-cancelados-no-aeroporto-de-vitoria-nesta-terca.html" target="_self">Mais dois voos são cancelados no Aeroporto de Vitória nesta terça</a></h2>
-                    </div>
-                  </div>
+                  <Card01 findPosition={findPosition} coverItems={coverItems} position={"editories/economia/01"} />
                 </div>
                 <div className="col-md-6 col-lg-7">
                   <div className="row">
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/economia/02">
-                        <a href="economia/noticia/01/2022/petrobras-anuncia-aumentos-de-4-8-para-gasolina-e-de-8-para-o-diesel.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/9bc616f0-7b51-11eb-95ed-45b38de91fb5--w116_h116_lx235_rx935_ty0_by700.jpg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-economia">ECONOMIA</span>
-                          </div>
-                          <h2><a href="economia/noticia/01/2022/petrobras-anuncia-aumentos-de-4-8-para-gasolina-e-de-8-para-o-diesel.html" target="_self">Petrobras anuncia aumento de 4,8% para gasolina a partir desta quarta-feira</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/economia/02"} />
                     </div>
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/economia/03">
-                        <a href="economia/noticia/01/2022/es-deve-receber-r-24-4-milhoes-para-investimento-na-atencao-primaria-a-saude.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/89658bd0-3317-11eb-bd3c-778f5e5cef60--w116_h116_lx150_rx650_ty0_by500.jpg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-economia">ECONOMIA</span>
-                          </div>
-                          <h2><a href="economia/noticia/01/2022/es-deve-receber-r-24-4-milhoes-para-investimento-na-atencao-primaria-a-saude.html" target="_self">ES deve receber R$ 24,4 milhões para investimento na atenção primária à Saúde</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/economia/03"} />
                     </div>
                   </div>
                 </div>
@@ -792,60 +609,19 @@ export default function Home() {
                 </div>
                 <div className="box-content">
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/economia/04">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-economia">ECONOMIA</span>
-                        </div>
-                        <h2><a href="economia/noticia/01/2022/anac-diz-que-monitora-cancelamento-de-voos-por-covid-19.html" target="_self">Anac diz que monitora cancelamento de voos por covid-19</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/economia/04"} />
                   </div>
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/economia/05">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-economia">ECONOMIA</span>
-                        </div>
-                        <h2><a href="economia/noticia/01/2022/teto-para-aposentadorias-e-pensoes-do-inss-sobe-para-r-7-087-em-2022.html" target="_self">Teto para aposentadorias e pensões do INSS sobe para R$ 7.087 em 2022</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/economia/05"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/economia/06">
-                      <a href="economia/noticia/01/2022/governo-quer-atrair-investidor-de-fora-para-leilao-da-br-262.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/9b222ef0-b94b-0138-991a-0a58a9feac2a--w240_h140_lx0_rx906_ty31_by560.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-economia">ECONOMIA</span>
-                        </div>
-                        <h2><a href="economia/noticia/01/2022/governo-quer-atrair-investidor-de-fora-para-leilao-da-br-262.html" target="_self">Governo quer atrair investidor de fora para leilão da BR-262</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/economia/06"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/economia/07">
-                      <a href="economia/noticia/01/2022/pagamento-de-abono-salarial-sera-de-82-a-313-com-liberacao-de-r-21-8-bi.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/bfe8a360-a4c5-0137-40f1-6231c35b6685--w240_h140_lx0_rx1024_ty43_by640.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-economia">ECONOMIA</span>
-                        </div>
-                        <h2><a href="economia/noticia/01/2022/pagamento-de-abono-salarial-sera-de-82-a-313-com-liberacao-de-r-21-8-bi.html" target="_self">PIS/Pasep: pagamento de abono salarial começa em fevereiro</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/economia/07"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/economia/08">
-                      <a href="economia/noticia/01/2022/mais-de-195-mil-empresarios-pedem-adesao-ao-simples-na-1-semana-de-prazo.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/617d22c0-2f1d-11eb-b9a7-751cb77b5a2f--w240_h140_lx0_rx800_ty17_by483.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-economia">ECONOMIA</span>
-                        </div>
-                        <h2><a href="economia/noticia/01/2022/mais-de-195-mil-empresarios-pedem-adesao-ao-simples-na-1-semana-de-prazo.html" target="_self">Mais de 195 mil empresários pedem adesão ao Simples</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/economia/08"} />
                   </div>
                   <div className="card-advertising advertising-section ecn-posicao-2 sec-posicao-2">
                     <div className="content-advertising">
@@ -855,40 +631,15 @@ export default function Home() {
                   <div className="col-md-8 col-lg-8">
                     <div className="row">
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/economia/09">
-                          <a href="economia/noticia/01/2022/guedes-convoca-equipe-para-resolver-refis-e-orienta-bolsonaro-a-vetar-reajuste.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/d12d2c70-dab0-11eb-b6b8-3f2932a9fc9c--w116_h116_lx235_rx935_ty0_by700.jpg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-economia">ECONOMIA</span>
-                            </div>
-                            <h2><a href="economia/noticia/01/2022/guedes-convoca-equipe-para-resolver-refis-e-orienta-bolsonaro-a-vetar-reajuste.html" target="_self">Guedes convoca equipe para resolver Refis e orienta Bolsonaro a vetar reajuste</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/economia/09"} />
                       </div>
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/economia/10">
-                          <a href="economia/noticia/01/2022/bolsonaro-complemento-do-refis-a-pequenas-empresas-pode-vir-por-lei-complementar.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/04bd26a0-8b75-0135-fdef-6231c35b6685--w116_h116_lx375_rx1829_ty0_by1454.jpg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-economia">ECONOMIA</span>
-                            </div>
-                            <h2><a href="economia/noticia/01/2022/bolsonaro-complemento-do-refis-a-pequenas-empresas-pode-vir-por-lei-complementar.html" target="_self">Bolsonaro: complemento do Refis a pequenas empresas pode vir por lei</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/economia/10"} />
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/economia/11">
-                      <a href="economia/noticia/01/2022/preco-do-etanol-cai-em-18-estados-na-semana-diz-anp-media-nacional-recua-0-24.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/d31bef60-8d07-0135-b704-6231c35b6685--w240_h140_lx0_rx580_ty5_by343.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-economia">ECONOMIA</span>
-                        </div>
-                        <h2><a href="economia/noticia/01/2022/preco-do-etanol-cai-em-18-estados-na-semana-diz-anp-media-nacional-recua-0-24.html" target="_self">Preço do etanol cai em 18 Estados na semana, diz ANP</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/economia/11"} />
                   </div>
                 </div>
               </div>
@@ -916,37 +667,13 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-4 col-lg-6 order-1 order-lg-1">
-                  <div className="card-theme card-model-1 ga-event-track" data-ga-event-label="editories/saude/01">
-                    <a href="saude/noticia/01/2022/saude-reduz-periodo-de-quarentena-por-covid-para-no-minimo-sete-dias-em-todo-pais.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/d2530940-75e0-0138-711f-0a58a9feac2a--w540_h262_lx0_rx660_ty26_by346.jpg" alt="" /></picture></a>
-                    <div className="card-title title2">
-                      <span className="hat bg-color-saude">SAúDE</span>
-                      <h2><a href="saude/noticia/01/2022/saude-reduz-periodo-de-quarentena-por-covid-para-no-minimo-sete-dias-em-todo-pais.html" target="_self">Saúde reduz período de quarentena por covid para no mínimo sete dias em todo País</a></h2>
-                    </div>
-                  </div>
+                  <Card01 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/01"} />
                 </div>
                 <div className="col-md-4 col-lg-3 order-2 order-lg-2">
-                  <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/saude/02">
-                    <a href="saude/noticia/01/2022/1-3-milhao-de-pessoas-no-es-estao-sem-protecao-de-vacina-contra-covid.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/49b77960-face-11eb-9b25-23ee807ff34e--w255_h140_lx0_rx900_ty53_by547.jpg" alt="" /></picture></a>
-                    <div className="card-title">
-                      <a href="#" className="button-more-click"></a>
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/1-3-milhao-de-pessoas-no-es-estao-sem-protecao-de-vacina-contra-covid.html" target="_self">Covid: 1,3 milhão de pessoas no ES estão sem proteção da vacina</a></h2>
-                    </div>
-                  </div>
+                  <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/02"} />
                 </div>
                 <div className="col-md-4 col-lg-3 order-3 order-lg-3">
-                  <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/saude/03">
-                    <a href="saude/noticia/01/2022/exagerou-no-sol-veja-como-cuidar-da-pele-e-evitar-problemas.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/80f12c60-72e1-11ec-837a-196b9e82c443--w255_h140_lx0_rx800_ty80_by520.jpg" alt="" /></picture></a>
-                    <div className="card-title">
-                      <a href="#" className="button-more-click"></a>
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/exagerou-no-sol-veja-como-cuidar-da-pele-e-evitar-problemas.html" target="_self">Exagerou no sol? Veja como cuidar da pele e evitar problemas</a></h2>
-                    </div>
-                  </div>
+                  <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/03"} />
                 </div>
                 <div className="col-md-12 col-lg-4 order-4 order-lg-4">
                   <div className="card-advertising sde-posicao-2">
@@ -956,57 +683,17 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-4 col-lg-3 order-5 order-lg-5">
-                  <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/saude/04">
-                    <a href="saude/noticia/01/2022/ao-vivo-secretario-de-saude-do-es-fala-sobre-covid-19.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/26e2ba50-5df0-11ec-af67-43cd2f668b7b--w255_h140_lx0_rx1170_ty29_by671.jpg" alt="" /></picture></a>
-                    <div className="card-title">
-                      <a href="#" className="button-more-click"></a>
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/ao-vivo-secretario-de-saude-do-es-fala-sobre-covid-19.html" target="_self">Presença da Ômicron no ES passa de 3% para 97%, diz secretário de Saúde</a></h2>
-                    </div>
-                  </div>
+                  <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/04"} />
                 </div>
                 <div className="col-md-8 col-lg-5 order-6 order-lg-6">
-                  <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/saude/05">
-                    <a href="saude/noticia/01/2022/covid-e-influenza-saiba-onde-se-vacinar-na-grande-vitoria.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/ae05c660-7210-11ec-ad2c-113001cac01c--w116_h116_lx191_rx808_ty0_by617.jpg" alt="" /></a>
-                    <div className="card-title">
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/covid-e-influenza-saiba-onde-se-vacinar-na-grande-vitoria.html" target="_self">Covid e gripe: veja onde se vacinar na Grande Vitória</a></h2>
-                    </div>
-                  </div>
-                  <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/saude/06">
-                    <a href="saude/noticia/01/2022/populacao-tera-atendimento-psiquiatrico-gratuito-no-sabado-15-em-vitoria.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/06ac95a0-721b-11ec-95d2-61c1ddd88005--w116_h116_lx58_rx1022_ty0_by964.jpg" alt="" /></a>
-                    <div className="card-title">
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/populacao-tera-atendimento-psiquiatrico-gratuito-no-sabado-15-em-vitoria.html" target="_self">Atendimento psiquiátrico gratuito no sábado em Vitória</a></h2>
-                    </div>
-                  </div>
+                  <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/05"} />
+                  <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/06"} />
                 </div>
                 <div className="col-md-4 col-lg-3 order-8 order-lg-7">
-                  <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/saude/07">
-                    <a href="saude/noticia/01/2022/covid-19-saiba-onde-estao-sendo-realizados-testes-na-grande-vitoria.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/43a18060-4313-11ec-adf0-715cc2e9c9c4--w255_h140_lx0_rx768_ty45_by467.jpg" alt="" /></picture></a>
-                    <div className="card-title">
-                      <a href="#" className="button-more-click"></a>
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/covid-19-saiba-onde-estao-sendo-realizados-testes-na-grande-vitoria.html" target="_self">Covid 19: saiba onde estão sendo realizados testes na Grande Vitória</a></h2>
-                    </div>
-                  </div>
+                  <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/07"} />
                 </div>
                 <div className="col-md-8 col-lg-5 order-9 order-lg-8">
-                  <div className="card-theme card-model-1 ga-event-track" data-ga-event-label="editories/saude/08">
-                    <a href="saude/noticia/01/2022/epidemia-de-gripe-causa-falta-de-remedios-nas-farmacias-da-grande-vitoria.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/011d07f0-6e33-11ec-b1af-6db6cc26d439--w445_h262_lx29_rx1251_ty0_by720.jpeg" alt="" /></picture></a>
-                    <div className="card-title title2">
-                      <span className="hat bg-color-saude">SAúDE</span>
-                      <h2><a href="saude/noticia/01/2022/epidemia-de-gripe-causa-falta-de-remedios-nas-farmacias-da-grande-vitoria.html" target="_self">Epidemia de gripe causa falta de remédios nas farmácias</a></h2>
-                    </div>
-                  </div>
+                  <Card01 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/08"} />
                 </div>
                 <div className="col-md-12 col-lg-4 order-7 order-lg-9">
                   <div className="card-advertising sde-posicao-3">
@@ -1016,26 +703,10 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-6 order-10 order-lg-10">
-                  <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/saude/09">
-                    <a href="saude/noticia/01/2022/covid-19-teste-sem-agendamento-no-aeroporto-de-vitoria-sera-apenas-para-quem-estiver-viajando.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/7dd6c4f0-2f48-11eb-b63c-8b8aec4fb157--w116_h116_lx164_rx820_ty0_by656.jpg" alt="" /></a>
-                    <div className="card-title">
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/covid-19-teste-sem-agendamento-no-aeroporto-de-vitoria-sera-apenas-para-quem-estiver-viajando.html" target="_self">Aeroporto: Teste sem agendar apenas para quem estiver viajando</a></h2>
-                    </div>
-                  </div>
+                  <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/09"} />
                 </div>
                 <div className="col-md-6 order-11 order-lg-11">
-                  <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/saude/10">
-                    <a href="saude/noticia/01/2022/covid-19-vitoria-e-a-primeira-cidade-da-regiao-metropolitana-a-atingir-o-risco-muito-baixo.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/b77387b0-5c25-11ec-99d8-4973026f94dd--w116_h116_lx170_rx816_ty0_by646.jpeg" alt="" /></a>
-                    <div className="card-title">
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/covid-19-vitoria-e-a-primeira-cidade-da-regiao-metropolitana-a-atingir-o-risco-muito-baixo.html" target="_self">Vitória é a primeira cidade da Região Metropolitana a atingir o 'risco muito baixo'</a></h2>
-                    </div>
-                  </div>
+                  <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/10"} />
                 </div>
                 <div className="col-12 order-12 order-lg-12">
                   <div className="card-advertising sde-posicao-4">
@@ -1045,58 +716,17 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-6 order-13 order-lg-13">
-                  <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/saude/11">
-                    <a href="saude/noticia/01/2022/es-prepara-ampliacao-de-300-leitos-na-rede-hospitalar-por-aumento-de-casos-de-gripe-e-covid.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/49462540-8b15-11eb-9c77-5d8a0cebfa60--w116_h116_lx420_rx1500_ty0_by1080.jpg" alt="" /></a>
-                    <div className="card-title">
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/es-prepara-ampliacao-de-300-leitos-na-rede-hospitalar-por-aumento-de-casos-de-gripe-e-covid.html" target="_self">ES prepara ampliação de leitos na rede hospitalar por aumento de gripe e covid</a></h2>
-                    </div>
-                  </div>
+                  <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/11"} />
                 </div>
                 <div className="col-md-6 order-14 order-lg-14">
-                  <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/saude/12">
-                    <a href="saude/noticia/01/2022/es-pode-ter-epidemia-de-dengue-no-verao-alerta-secretario-de-saude.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/c3d8bf70-d8f5-0137-ac27-0a58a9feac2a--w116_h116_lx86_rx634_ty0_by548.jpg" alt="" /></a>
-                    <div className="card-title">
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/es-pode-ter-epidemia-de-dengue-no-verao-alerta-secretario-de-saude.html" target="_self">ES pode ter epidemia de dengue no verão, alerta secretário de saúde</a></h2>
-                    </div>
-                  </div>
+                  <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/12"} />
                 </div>
                 <div className="col-md-4 col-lg-3 order-16 order-lg-15">
-                  <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/saude/13">
-                    <a href="saude/noticia/01/2022/gripe-h3n2-pode-ser-mais-grave-em-criancas-de-0-a-2-anos.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/8f915c50-0d91-11ec-bf0e-b1ba25b1a012--w255_h140_lx13_rx627_ty0_by337.jpg" alt="" /></picture></a>
-                    <div className="card-title">
-                      <a href="#" className="button-more-click"></a>
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/gripe-h3n2-pode-ser-mais-grave-em-criancas-de-0-a-2-anos.html" target="_self">Gripe H3N2 pode ser mais grave em crianças de 0 a 2 anos</a></h2>
-                    </div>
-                  </div>
+                  <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/13"} />
                 </div>
                 <div className="col-md-8 col-lg-5 order-17 order-lg-16">
-                  <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/saude/14">
-                    <a href="saude/noticia/01/2022/vitoria-vai-ampliar-horario-e-equipes-em-seis-postos-para-atender-pacientes-com-gripe.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/9b8be520-6da9-11ec-911a-1fb0cab8e945--w116_h116_lx113_rx340_ty0_by227.jpg" alt="" /></a>
-                    <div className="card-title">
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/vitoria-vai-ampliar-horario-e-equipes-em-seis-postos-para-atender-pacientes-com-gripe.html" target="_self">Vitória vai ampliar horário e equipes em postos de saúde</a></h2>
-                    </div>
-                  </div>
-                  <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/saude/15">
-                    <a href="saude/noticia/01/2022/vacinacao-infantil-contra-a-covid-19-devera-obedecer-intervalo-de-8-semanas-entre-as-2-doses.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/95557bd0-6e71-11ec-9065-83c627f3d88b--w116_h116_lx170_rx574_ty0_by404.jpeg" alt="" /></a>
-                    <div className="card-title">
-                      <div className="card-info">
-                        <span className="hat font-color-saude">SAúDE</span>
-                      </div>
-                      <h2><a href="saude/noticia/01/2022/vacinacao-infantil-contra-a-covid-19-devera-obedecer-intervalo-de-8-semanas-entre-as-2-doses.html" target="_self">Vacinação em crianças terá intervalo de 8 semanas entre as doses</a></h2>
-                    </div>
-                  </div>
+                  <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/14"} />
+                  <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/saude/15"} />
                 </div>
                 <div className="col-md-12 col-lg-4 order-15 order-lg-17">
                   <div className="card-advertising sde-posicao-5">
@@ -1130,96 +760,33 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-6 col-lg-5">
-                  <div className="card-theme card-model-1 ga-event-track" data-ga-event-label="editories/trabalho/01">
-                    <a href="trabalho/noticia/01/2022/procurando-estagio-mais-de-400-vagas-abertas-para-niveis-medio-tecnico-e-superior-no-es.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/ba29ea80-72e1-11ec-837a-196b9e82c443--w445_h262_lx0_rx1280_ty50_by804.jpeg" alt="" /></picture></a>
-                    <div className="card-title title2">
-                      <span className="hat bg-color-trabalho">TRABALHO</span>
-                      <h2><a href="trabalho/noticia/01/2022/procurando-estagio-mais-de-400-vagas-abertas-para-niveis-medio-tecnico-e-superior-no-es.html" target="_self">Procurando estágio? Mais de 470 vagas abertas para níveis médio, técnico e superior no ES</a></h2>
-                    </div>
-                  </div>
+                  <Card01 findPosition={findPosition} coverItems={coverItems} position={"editories/trabalho/01"} />
                 </div>
                 <div className="col-md-6 col-lg-7">
                   <div className="row">
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/trabalho/02">
-                        <a href="trabalho/noticia/01/2022/petrobras-recebe-212-mil-inscricoes-para-757-vagas.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/a7a2d1d0-12d7-0138-9221-0a58a9feac2a--w116_h116_lx190_rx950_ty0_by760.jpg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-trabalho">TRABALHO</span>
-                          </div>
-                          <h2><a href="trabalho/noticia/01/2022/petrobras-recebe-212-mil-inscricoes-para-757-vagas.html" target="_self">Concurso da Petrobras tem 212 mil inscrições para 757 vagas</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/trabalho/02"} />
                     </div>
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/trabalho/03">
-                        <a href="trabalho/noticia/01/2022/cidade-do-interior-do-es-tera-concurso-para-guarda-municipal-em-2022.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/30c0d950-6fc8-11ec-bf35-6fa0c83e5a5e--w116_h116_lx280_rx1000_ty0_by720.jpeg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-trabalho">TRABALHO</span>
-                          </div>
-                          <h2><a href="trabalho/noticia/01/2022/cidade-do-interior-do-es-tera-concurso-para-guarda-municipal-em-2022.html" target="_self">Cidade do interior do ES terá concurso para Guarda Municipal em 2022</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/trabalho/03"} />
                     </div>
                   </div>
                 </div>
                 <div className="box-content">
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/trabalho/04">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-trabalho">TRABALHO</span>
-                        </div>
-                        <h2><a href="https://www.folhavitoria.com.br/geral/blogs/empregoseconcursos/2022/01/03/grandes-empresas-oferecem-programas-de-capacitacao-para-negros/" target="_blank">Grandes empresas oferecem programas de capacitação</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/trabalho/04"} />
                   </div>
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/trabalho/05">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-trabalho">TRABALHO</span>
-                        </div>
-                        <h2><a href="trabalho/noticia/01/2022/concursos-no-brasil-podem-ter-236-mil-vagas-parar-diferentes-niveis-e-regioes-diz-especialista.html" target="_self">Concursos: 236 mil vagas previstas no Brasil</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/trabalho/05"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/trabalho/06">
-                      <a href="https://www.folhavitoria.com.br/geral/blogs/empregoseconcursos/2022/01/06/coca-cola-abre-vagas-no-es-para-auxiliar-administrativo-pcd/" className="image-link" target="_blank"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/f1b0a5a0-8797-0136-fbcc-6231c35b6685--w240_h140_lx27_rx593_ty0_by330.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-trabalho">TRABALHO</span>
-                        </div>
-                        <h2><a href="https://www.folhavitoria.com.br/geral/blogs/empregoseconcursos/2022/01/06/coca-cola-abre-vagas-no-es-para-auxiliar-administrativo-pcd/" target="_blank">Coca Cola abre vagas no ES para auxiliar administrativo</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/trabalho/06"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/trabalho/07">
-                      <a href="https://www.folhavitoria.com.br/geral/blogs/empregoseconcursos/2022/01/06/empresas-em-todo-o-pais-oferecem-mais-de-1000-vagas/" className="image-link" target="_blank"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/647da330-7dda-11eb-8e93-f57a8989ae25--w240_h140_lx0_rx1195_ty0_by697.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-trabalho">TRABALHO</span>
-                        </div>
-                        <h2><a href="https://www.folhavitoria.com.br/geral/blogs/empregoseconcursos/2022/01/06/empresas-em-todo-o-pais-oferecem-mais-de-1000-vagas/" target="_blank">Empresas em todo o país oferecem mais de mil vagas. Confira!</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/trabalho/07"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/trabalho/08">
-                      <a href="trabalho/noticia/01/2022/ibge-prorroga-inscricoes-para-o-censo-2022-ate-21-de-janeiro-devido-a-baixa-procura.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/a66015a0-971e-11eb-8e6a-4ff65e2de2eb--w240_h140_lx0_rx540_ty43_by358.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-trabalho">TRABALHO</span>
-                        </div>
-                        <h2><a href="trabalho/noticia/01/2022/ibge-prorroga-inscricoes-para-o-censo-2022-ate-21-de-janeiro-devido-a-baixa-procura.html" target="_self">IBGE prorroga inscrições para o censo 2022 até 21 de janeiro</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/trabalho/08"} />
                   </div>
                   <div className="card-advertising advertising-section trl-posicao-2 sec-posicao-2">
                     <div className="content-advertising">
@@ -1229,40 +796,15 @@ export default function Home() {
                   <div className="col-md-8 col-lg-8">
                     <div className="row">
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/trabalho/09">
-                          <a href="trabalho/noticia/01/2022/vitoria-abre-processo-seletivo-para-contratacao-de-professores-com-salario-de-ate-r-3-6-mil.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/6585c300-6cdd-11ec-9fa1-81fb290e164f--w116_h116_lx133_rx667_ty0_by534.jpg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-trabalho">TRABALHO</span>
-                            </div>
-                            <h2><a href="trabalho/noticia/01/2022/vitoria-abre-processo-seletivo-para-contratacao-de-professores-com-salario-de-ate-r-3-6-mil.html" target="_self">Vitória abre processo seletivo para contratação de professores</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/trabalho/09"} />
                       </div>
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/trabalho/10">
-                          <a href="trabalho/noticia/01/2022/serra-abre-500-vagas-gratuitas-para-capacitar-meis.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/e7a611f0-d223-0137-a1c6-0a58a9feac2a--w116_h116_lx128_rx896_ty0_by768.jpeg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-trabalho">TRABALHO</span>
-                            </div>
-                            <h2><a href="trabalho/noticia/01/2022/serra-abre-500-vagas-gratuitas-para-capacitar-meis.html" target="_self">Serra abre 500 vagas gratuitas para capacitar microempreendedores</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/trabalho/10"} />
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/trabalho/11">
-                      <a href="https://www.folhavitoria.com.br/geral/blogs/empregoseconcursos/2021/12/23/veja-dicas-para-montar-um-escritorio-dentro-de-casa/" className="image-link" target="_blank"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/8004b360-7960-0135-496a-6231c35b6685--w240_h140_lx0_rx400_ty33_by267.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-trabalho">TRABALHO</span>
-                        </div>
-                        <h2><a href="https://www.folhavitoria.com.br/geral/blogs/empregoseconcursos/2021/12/23/veja-dicas-para-montar-um-escritorio-dentro-de-casa/" target="_blank">Veja dicas para montar um escritório dentro de casa</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/trabalho/11"} />
                   </div>
                 </div>
               </div>
@@ -1290,96 +832,33 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-6 col-lg-5">
-                  <div className="card-theme card-model-1 ga-event-track" data-ga-event-label="editories/policia/01">
-                    <a href="policia/noticia/01/2022/dono-de-lava-jato-e-assassinado-com-mais-de-30-tiros-em-vila-velha.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/b73d3790-72f1-11ec-a98e-e79bb3b56485--w445_h262_lx0_rx1032_ty83_by691.jpeg" alt="" /></picture></a>
-                    <div className="card-title title2">
-                      <span className="hat bg-color-policia">POLíCIA</span>
-                      <h2><a href="policia/noticia/01/2022/dono-de-lava-jato-e-assassinado-com-mais-de-30-tiros-em-vila-velha.html" target="_self">Dono de lava-jato é assassinado com mais de 30 tiros em Vila Velha</a></h2>
-                    </div>
-                  </div>
+                  <Card01 findPosition={findPosition} coverItems={coverItems} position={"editories/policia/01"} />
                 </div>
                 <div className="col-md-6 col-lg-7">
                   <div className="row">
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/policia/02">
-                        <a href="policia/noticia/01/2022/tres-suspeitos-de-envolvimento-com-o-trafico-sao-presos-com-uma-pistola-turca-e-municao-de-fuzil.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/30c998c0-70c1-11ec-9b7a-49de1f04348e--w116_h116_lx160_rx1120_ty0_by960.jpeg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-policia">POLíCIA</span>
-                          </div>
-                          <h2><a href="policia/noticia/01/2022/tres-suspeitos-de-envolvimento-com-o-trafico-sao-presos-com-uma-pistola-turca-e-municao-de-fuzil.html" target="_self">Suspeitos de tráfico são presos com pistola turca e munição de fuzil</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/policia/02"} />
                     </div>
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/policia/03">
-                        <a href="policia/noticia/01/2022/adolescente-tenta-defender-a-mae-e-e-agredida-a-pauladas-pelo-pai.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/5811ae30-9a35-11eb-8e2b-e3420daf9210--w116_h116_lx325_rx876_ty0_by551.png" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-policia">POLíCIA</span>
-                          </div>
-                          <h2><a href="policia/noticia/01/2022/adolescente-tenta-defender-a-mae-e-e-agredida-a-pauladas-pelo-pai.html" target="_self">Adolescente tenta defender a mãe e é agredida a pauladas pelo pai em Cariacica</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/policia/03"} />
                     </div>
                   </div>
                 </div>
                 <div className="box-content">
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/policia/04">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-policia">POLíCIA</span>
-                        </div>
-                        <h2><a href="policia/noticia/01/2022/casal-e-morto-com-12-tiros-enquanto-dormia-em-vila-velha.html" target="_self">Casal é morto com 12 tiros enquanto dormia em Vila Velha</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/policia/04"} />
                   </div>
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/policia/05">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-policia">POLíCIA</span>
-                        </div>
-                        <h2><a href="policia/noticia/01/2022/motorista-de-aplicativo-que-mudou-rota-para-estuprar-passageira-e-preso-em-linhares.html" target="_self">Motorista de app que mudou rota para estuprar passageira é preso</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/policia/05"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/policia/06">
-                      <a href="policia/noticia/01/2022/jovem-e-morto-a-tiros-e-amiga-dele-e-agredida-com-coronhadas-em-cariacica.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/01b84670-8ba8-0138-6fc3-0a58a9feac2a--w240_h140_lx0_rx1156_ty97_by771.jpeg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-policia">POLíCIA</span>
-                        </div>
-                        <h2><a href="policia/noticia/01/2022/jovem-e-morto-a-tiros-e-amiga-dele-e-agredida-com-coronhadas-em-cariacica.html" target="_self">Jovem é morto a tiros e amiga dele é agredida com coronhadas</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/policia/06"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/policia/07">
-                      <a href="policia/noticia/01/2022/homem-e-assassinado-e-tres-sao-baleados-em-bar-de-cariacica.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/fe61a8a0-cea9-11eb-84a1-5dcd1de92db1--w240_h140_lx32_rx754_ty0_by421.jpeg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-policia">POLíCIA</span>
-                        </div>
-                        <h2><a href="policia/noticia/01/2022/homem-e-assassinado-e-tres-sao-baleados-em-bar-de-cariacica.html" target="_self">Homem é assassinado e três são baleados em bar de Cariacica</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/policia/07"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/policia/08">
-                      <a href="policia/noticia/01/2022/video-homens-brigam-no-meio-da-rua-apos-ofensas-no-centro-de-vitoria.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/d1463000-70cc-11ec-b921-27016a2b52dc--w240_h140_lx102_rx653_ty0_by321.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-policia">POLíCIA</span>
-                        </div>
-                        <h2><a href="policia/noticia/01/2022/video-homens-brigam-no-meio-da-rua-apos-ofensas-no-centro-de-vitoria.html" target="_self">VÍDEO | Homens brigam no meio da rua após ofensas no Centro</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/policia/08"} />
                   </div>
                   <div className="card-advertising advertising-section plc-posicao-2 sec-posicao-2">
                     <div className="content-advertising">
@@ -1389,40 +868,15 @@ export default function Home() {
                   <div className="col-md-8 col-lg-8">
                     <div className="row">
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/policia/09">
-                          <a href="policia/noticia/01/2022/pm-prende-em-piuma-suspeito-de-assassinar-a-tiros-comerciante-de-cachoeiro-na-vespera-de-natal.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/7fd00a90-7255-11ec-922a-9f129dc523b7--w116_h116_lx100_rx700_ty0_by600.png" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-policia">POLíCIA</span>
-                            </div>
-                            <h2><a href="policia/noticia/01/2022/pm-prende-em-piuma-suspeito-de-assassinar-a-tiros-comerciante-de-cachoeiro-na-vespera-de-natal.html" target="_self">Suspeito de matar comerciante na véspera do Natal é preso</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/policia/09"} />
                       </div>
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/policia/10">
-                          <a href="policia/noticia/01/2022/funcionario-e-preso-suspeito-de-furtar-equipamentos-de-empresa-em-vitoria.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/0779b260-7257-11ec-b053-97470189bb01--w116_h116_lx0_rx738_ty431_by1169.jpeg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-policia">POLíCIA</span>
-                            </div>
-                            <h2><a href="policia/noticia/01/2022/funcionario-e-preso-suspeito-de-furtar-equipamentos-de-empresa-em-vitoria.html" target="_self">Funcionário é preso suspeito de furtar equipamentos da mineradora Vale</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/policia/10"} />
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/policia/11">
-                      <a href="policia/noticia/01/2022/homem-e-morto-com-mais-de-10-tiros-em-cariacica.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/42caf460-70a3-11ec-bcff-09cb5949bdb8--w240_h140_lx132_rx508_ty0_by219.png" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-policia">POLíCIA</span>
-                        </div>
-                        <h2><a href="policia/noticia/01/2022/homem-e-morto-com-mais-de-10-tiros-em-cariacica.html" target="_self">Homem é morto com mais de 10 tiros em Cariacica</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/policia/11"} />
                   </div>
                 </div>
               </div>
@@ -1450,96 +904,33 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-6 col-lg-5">
-                  <div className="card-theme card-model-1 ga-event-track" data-ga-event-label="editories/politica/01">
-                    <a href="politica/noticia/01/2022/servidores-de-vila-velha-recebem-abono-nesta-sexta-feira.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/4e1953f0-33b2-0137-2ea6-6231c35b6685--w445_h262_lx25_rx875_ty0_by500.jpg" alt="" /></picture></a>
-                    <div className="card-title title2">
-                      <span className="hat bg-color-politica">POLíTICA</span>
-                      <h2><a href="politica/noticia/01/2022/servidores-de-vila-velha-recebem-abono-nesta-sexta-feira.html" target="_self">Servidores de Vila Velha recebem abono nesta sexta-feira</a></h2>
-                    </div>
-                  </div>
+                  <Card01 findPosition={findPosition} coverItems={coverItems} position={"editories/politica/01"} />
                 </div>
                 <div className="col-md-6 col-lg-7">
                   <div className="row">
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/politica/02">
-                        <a href="politica/noticia/01/2022/abraham-weintraub-anuncia-volta-ao-brasil-e-adota-discurso-eleitoral.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/26b5be50-df26-0137-4cdc-0a58a9feac2a--w116_h116_lx190_rx950_ty0_by760.jpg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-politica">POLíTICA</span>
-                          </div>
-                          <h2><a href="politica/noticia/01/2022/abraham-weintraub-anuncia-volta-ao-brasil-e-adota-discurso-eleitoral.html" target="_self">Abraham Weintraub anuncia volta ao Brasil e adota discurso eleitoral</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/politica/02"} />
                     </div>
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/politica/03">
-                        <a href="politica/noticia/01/2022/twitter-remove-posts-de-malafaia-apos-associacao-entre-vacina-e-infanticidio.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/85a328f0-2ba7-0137-d1cf-6231c35b6685--w116_h116_lx78_rx383_ty0_by305.jpg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-politica">POLíTICA</span>
-                          </div>
-                          <h2><a href="politica/noticia/01/2022/twitter-remove-posts-de-malafaia-apos-associacao-entre-vacina-e-infanticidio.html" target="_self">Twitter remove posts de Malafaia após associação entre vacina e infanticídio</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/politica/03"} />
                     </div>
                   </div>
                 </div>
                 <div className="box-content">
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/politica/04">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-politica">POLíTICA</span>
-                        </div>
-                        <h2><a href="https://www.folhavitoria.com.br/politica/blogs/esplanada/2022/01/11/mdb-prefere-doria/" target="_blank">Esplanada | Em cenário indefinido para eleições, MDB prefere Dória</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/politica/04"} />
                   </div>
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/politica/05">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-politica">POLíTICA</span>
-                        </div>
-                        <h2><a href="https://www.folhavitoria.com.br/geral/blogs/livrepensar/2022/01/ivete-x-bolsonaro-artistas-devem-ou-nao-se-posicionar/" target="_blank">Ivete x Bolsonaro: artistas devem ou não se posicionar?</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/politica/05"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/politica/06">
-                      <a href="politica/noticia/01/2022/essa-direita-camicase-se-autodestroi-diz-senadora-soraya-thronicke.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/c452bd30-5d98-0137-eec5-6231c35b6685--w240_h140_lx0_rx460_ty18_by287.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-politica">POLíTICA</span>
-                        </div>
-                        <h2><a href="politica/noticia/01/2022/essa-direita-camicase-se-autodestroi-diz-senadora-soraya-thronicke.html" target="_self">'Essa direita camicase se autodestrói', diz senadora Soraya</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/politica/06"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/politica/07">
-                      <a href="politica/noticia/01/2022/planalto-confirma-viagem-de-bolsonaro-ao-suriname-nos-dias-20-e-21-de-janeiro.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/e6e293b0-187d-11ec-9f10-955809186c2e--w240_h140_lx0_rx1024_ty85_by683.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-politica">POLíTICA</span>
-                        </div>
-                        <h2><a href="politica/noticia/01/2022/planalto-confirma-viagem-de-bolsonaro-ao-suriname-nos-dias-20-e-21-de-janeiro.html" target="_self">Planalto confirma viagem de Bolsonaro ao Suriname</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/politica/07"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/politica/08">
-                      <a href="politica/noticia/01/2022/alckmin-manifesta-preocupacao-com-fala-de-lula-sobre-reforma-trabalhista.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/00e10770-0df2-0136-a254-6231c35b6685--w240_h140_lx0_rx600_ty3_by353.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-politica">POLíTICA</span>
-                        </div>
-                        <h2><a href="politica/noticia/01/2022/alckmin-manifesta-preocupacao-com-fala-de-lula-sobre-reforma-trabalhista.html" target="_self">Alckmin manifesta preocupação com fala de Lula sobre reforma</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/politica/08"} />
                   </div>
                   <div className="card-advertising advertising-section plt-posicao-2 sec-posicao-2">
                     <div className="content-advertising">
@@ -1549,40 +940,15 @@ export default function Home() {
                   <div className="col-md-8 col-lg-8">
                     <div className="row">
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/politica/09">
-                          <a href="politica/noticia/01/2022/de-aliado-a-rival-chefe-da-anvisa-agora-desafia-o-presidente.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/fc5aa700-b2bb-11eb-bc1e-9d53111ca667--w116_h116_lx235_rx935_ty0_by700.jpg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-politica">POLíTICA</span>
-                            </div>
-                            <h2><a href="politica/noticia/01/2022/de-aliado-a-rival-chefe-da-anvisa-agora-desafia-o-presidente.html" target="_self">De aliado a rival, chefe da Anvisa agora desafia o presidente</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/politica/09"} />
                       </div>
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/politica/10">
-                          <a href="politica/noticia/01/2022/nao-serei-jamais-bajuladora-de-mandato-diz-vice-lider-do-governo-no-congresso.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/c452bd30-5d98-0137-eec5-6231c35b6685--w116_h116_lx78_rx383_ty0_by305.jpg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-politica">POLíTICA</span>
-                            </div>
-                            <h2><a href="politica/noticia/01/2022/nao-serei-jamais-bajuladora-de-mandato-diz-vice-lider-do-governo-no-congresso.html" target="_self">'Não serei jamais bajuladora de mandato, diz vice-líder do governo</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/politica/10"} />
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/politica/11">
-                      <a href="politica/noticia/01/2022/terceira-via-sera-capaz-de-dialogar-e-ter-um-ou-dois-candidatos-afirma-doria.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/504de350-4628-11eb-afad-956b16c2bac5--w240_h140_lx0_rx1100_ty16_by657.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-politica">POLíTICA</span>
-                        </div>
-                        <h2><a href="politica/noticia/01/2022/terceira-via-sera-capaz-de-dialogar-e-ter-um-ou-dois-candidatos-afirma-doria.html" target="_self">Doria: Terceira via será capaz de dialogar e ter um ou dois candidatos</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/politica/11"} />
                   </div>
                 </div>
               </div>
@@ -1610,96 +976,33 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-6 col-lg-5">
-                  <div className="card-theme card-model-1 ga-event-track" data-ga-event-label="editories/esportes/01">
-                    <a href="esportes/noticia/01/2022/novak-djokovic-e-acusado-de-mentir-no-formulario-de-entrada-na-australia.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/38185760-1a47-0136-e43c-6231c35b6685--w445_h262_lx1_rx545_ty0_by320.jpg" alt="" /></picture></a>
-                    <div className="card-title title2">
-                      <span className="hat bg-color-esportes">ESPORTES</span>
-                      <h2><a href="esportes/noticia/01/2022/novak-djokovic-e-acusado-de-mentir-no-formulario-de-entrada-na-australia.html" target="_self">Novak Djokovic é acusado de mentir no formulário de entrada na Austrália</a></h2>
-                    </div>
-                  </div>
+                  <Card01 findPosition={findPosition} coverItems={coverItems} position={"editories/esportes/01"} />
                 </div>
                 <div className="col-md-6 col-lg-7">
                   <div className="row">
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/esportes/02">
-                        <a href="esportes/noticia/01/2022/ex-jogador-da-selecao-da-turquia-morre-em-acidente-de-carro-aos-27-anos.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/15199fb0-72e9-11ec-9bc0-7fe5aa9133cb--w116_h116_lx140_rx500_ty0_by360.jpg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-esportes">ESPORTES</span>
-                          </div>
-                          <h2><a href="esportes/noticia/01/2022/ex-jogador-da-selecao-da-turquia-morre-em-acidente-de-carro-aos-27-anos.html" target="_self">Ex-jogador da seleção da Turquia morre em acidente de carro aos 27 anos</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/esportes/02"} />
                     </div>
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/esportes/03">
-                        <a href="esportes/noticia/01/2022/paulo-sousa-e-apresentado-no-flamengo-e-fala-em-oportunidade-unica-na-carreira.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/44521530-7246-11ec-acc6-876ece2ab4ec--w116_h116_lx343_rx1705_ty0_by1362.jpg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-esportes">ESPORTES</span>
-                          </div>
-                          <h2><a href="esportes/noticia/01/2022/paulo-sousa-e-apresentado-no-flamengo-e-fala-em-oportunidade-unica-na-carreira.html" target="_self">Paulo Sousa é apresentado no Flamengo e fala em 'oportunidade única' na carreira</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/esportes/03"} />
                     </div>
                   </div>
                 </div>
                 <div className="box-content">
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/esportes/04">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-esportes">ESPORTES</span>
-                        </div>
-                        <h2><a href="esportes/noticia/01/2022/corinthians-revela-que-jo-willian-e-renato-augusto-estao-com-a-covid-19.html" target="_self">Corinthians revela que Jô, Willian e Renato Augusto estão com a covid-19</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/esportes/04"} />
                   </div>
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/esportes/05">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-esportes">ESPORTES</span>
-                        </div>
-                        <h2><a href="https://www.folhavitoria.com.br/esportes/blogs/corridaderua/2022/01/08/corrida-de-verao-vai-movimentar-o-litoral-sul-capixaba/" target="_blank">Corrida de Verão vai movimentar o litoral sul capixaba</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/esportes/05"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/esportes/06">
-                      <a href="esportes/noticia/01/2022/luiz-henrique-testa-positivo-para-a-covid-19-em-reapresentacao-do-fluminense.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/dafa4e00-722b-11ec-baec-cdcad2259492--w240_h140_lx14_rx786_ty0_by450.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-esportes">ESPORTES</span>
-                        </div>
-                        <h2><a href="esportes/noticia/01/2022/luiz-henrique-testa-positivo-para-a-covid-19-em-reapresentacao-do-fluminense.html" target="_self">Luiz Henrique testa positivo para a covid-19 no retorno do Flu</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/esportes/06"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/esportes/07">
-                      <a href="esportes/noticia/01/2022/nba-lanca-nba-trivia-e-fas-podem-ganhar-premios-todo-o-mes.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/4eb8eb10-7229-11ec-82cd-bfd98b57ce8e--w240_h140_lx0_rx1200_ty250_by950.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-esportes">ESPORTES</span>
-                        </div>
-                        <h2><a href="esportes/noticia/01/2022/nba-lanca-nba-trivia-e-fas-podem-ganhar-premios-todo-o-mes.html" target="_self">NBA lança ‘NBA Trivia’ e fãs podem ganhar prêmios todo o mês</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/esportes/07"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/esportes/08">
-                      <a href="esportes/noticia/01/2022/eles-querem-captura-lo-e-prende-lo-outra-vez-afirma-o-irmao-de-novak-djokovic.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/0ecee980-de60-11eb-9175-253ecbe0f33a--w240_h140_lx0_rx1600_ty3_by936.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-esportes">ESPORTES</span>
-                        </div>
-                        <h2><a href="esportes/noticia/01/2022/eles-querem-captura-lo-e-prende-lo-outra-vez-afirma-o-irmao-de-novak-djokovic.html" target="_self">'Eles querem prendê-lo', afirma o irmão de Novak Djokovic</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/esportes/08"} />
                   </div>
                   <div className="card-advertising advertising-section esp-posicao-2 sec-posicao-2">
                     <div className="content-advertising">
@@ -1709,40 +1012,15 @@ export default function Home() {
                   <div className="col-md-8 col-lg-8">
                     <div className="row">
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/esportes/09">
-                          <a href="esportes/noticia/01/2022/neymar-volta-a-franca-e-inicia-corrida-para-reforcar-o-psg-contra-o-real-madrid.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/5d2b0400-5062-11ec-a289-0b7e0f2972f8--w116_h116_lx154_rx523_ty0_by369.jpeg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-esportes">ESPORTES</span>
-                            </div>
-                            <h2><a href="esportes/noticia/01/2022/neymar-volta-a-franca-e-inicia-corrida-para-reforcar-o-psg-contra-o-real-madrid.html" target="_self">Neymar volta à França e inicia corrida para reforçar o PSG contra o Real Madrid</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/esportes/09"} />
                       </div>
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/esportes/10">
-                          <a href="esportes/noticia/01/2022/adhemar-ferreira-da-silva-e-o-1-homenageado-da-colecao-grandes-idolos-do-esporte.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/f11f3f00-7236-11ec-9741-290af07b43fc--w116_h116_lx70_rx430_ty0_by360.jpg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-esportes">ESPORTES</span>
-                            </div>
-                            <h2><a href="esportes/noticia/01/2022/adhemar-ferreira-da-silva-e-o-1-homenageado-da-colecao-grandes-idolos-do-esporte.html" target="_self">Grandes Ídolos do Esporte: Adhemar Ferreira da Silva é o 1º homenageado</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/esportes/10"} />
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/esportes/11">
-                      <a href="esportes/noticia/01/2022/klay-thompson-faz-17-pontos-em-volta-a-nba-apos-941-dias-noite-inesquecivel.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/c3738410-7215-11ec-970e-0105ec01071c--w240_h140_lx0_rx1080_ty360_by990.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-esportes">ESPORTES</span>
-                        </div>
-                        <h2><a href="esportes/noticia/01/2022/klay-thompson-faz-17-pontos-em-volta-a-nba-apos-941-dias-noite-inesquecivel.html" target="_self">Klay Thompson faz 17 pontos em volta à NBA após 941 dias</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/esportes/11"} />
                   </div>
                 </div>
               </div>
@@ -1770,96 +1048,33 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="col-md-6 col-lg-5">
-                  <div className="card-theme card-model-1 ga-event-track" data-ga-event-label="editories/games/01">
-                    <a href="games/noticia/01/2022/fa-cria-acessorio-para-tornar-dualsense-de-ps5-acessivel-com-uma-so-mao.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/5d5ddfc0-72d0-11ec-bec8-5369f209eda3--w445_h262_lx0_rx555_ty1_by327.jpg" alt="" /></picture></a>
-                    <div className="card-title title2">
-                      <span className="hat bg-color-games">GAMES</span>
-                      <h2><a href="games/noticia/01/2022/fa-cria-acessorio-para-tornar-dualsense-de-ps5-acessivel-com-uma-so-mao.html" target="_self">Fã cria acessório para tornar DualSense de PS5 acessível com uma só mão</a></h2>
-                    </div>
-                  </div>
+                  <Card01 findPosition={findPosition} coverItems={coverItems} position={"editories/games/01"} />
                 </div>
                 <div className="col-md-6 col-lg-7">
                   <div className="row">
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/games/02">
-                        <a href="games/noticia/01/2022/xbox-series-sx-e-o-console-que-mais-rapido-vendeu-da-microsoft.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/bce1fd10-72ca-11ec-853c-495e28ecc48b--w116_h116_lx333_rx877_ty0_by544.jpg" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-games">GAMES</span>
-                          </div>
-                          <h2><a href="games/noticia/01/2022/xbox-series-sx-e-o-console-que-mais-rapido-vendeu-da-microsoft.html" target="_self">Xbox Series S|X é o console que mais rápido vendeu da Microsoft</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/games/02"} />
                     </div>
                     <div className="col-lg-12">
-                      <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/games/03">
-                        <a href="games/noticia/01/2022/dying-light-2-hours.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/ec2240e0-72ce-11ec-9c3d-ef3fceb19f27--w116_h116_lx221_rx1173_ty0_by952.png" alt="" /></a>
-                        <div className="card-title">
-                          <div className="card-info">
-                            <span className="hat font-color-games">GAMES</span>
-                          </div>
-                          <h2><a href="games/noticia/01/2022/dying-light-2-hours.html" target="_self">Dying Light 2: Mais detalhes sobre a duração do novo game da Techland</a></h2>
-                        </div>
-                      </div>
+                      <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/games/03"} />
                     </div>
                   </div>
                 </div>
                 <div className="box-content">
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/games/04">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-games">GAMES</span>
-                        </div>
-                        <h2><a href="games/noticia/01/2022/verstappen-24-virtual.html" target="_self">24 horas de Le Mans Virtual: Max Verstappen irá correr no rFactor2</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/games/04"} />
                   </div>
                   <div className="col-md-6">
-                    <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/games/05">
-                      <div className="card-title">
-                        <div className="card-info">
-                          <span className="hat font-color-games">GAMES</span>
-                        </div>
-                        <h2><a href="games/noticia/01/2022/bbl-reality-games-lenovo.html" target="_self">Reality-show de games será lançado em parceria da Lenovo com a BBL</a></h2>
-                      </div>
-                    </div>
+                    <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/games/05"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/games/06">
-                      <a href="games/noticia/01/2022/horizon-forbidden-west-tem-imagens-vazadas-da-versao-ps4.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/b5a3aba0-72cc-11ec-b7f1-3b73ac3c9815--w240_h140_lx0_rx720_ty36_by456.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-games">GAMES</span>
-                        </div>
-                        <h2><a href="games/noticia/01/2022/horizon-forbidden-west-tem-imagens-vazadas-da-versao-ps4.html" target="_self">Vazaram imagens da versão de Horizon Forbidden West no Playstation 4</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/games/06"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/games/07">
-                      <a href="games/noticia/01/2022/take-two-esta-adquirindo-a-zynga-em-negocio-de-mais-de-12-7-bi-de-dolares.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/354e8120-7220-11ec-bb7e-fb409f08c9c3--w240_h140_lx38_rx296_ty0_by151.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-games">GAMES</span>
-                        </div>
-                        <h2><a href="games/noticia/01/2022/take-two-esta-adquirindo-a-zynga-em-negocio-de-mais-de-12-7-bi-de-dolares.html" target="_self">Take-Two está adquirindo a Zynga em negócio de mais de 12.7 bi de dólares</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/games/07"} />
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/games/08">
-                      <a href="games/noticia/01/2022/liga-brasileira-de-free-fire-volta-a-tv-aberta-em-2022.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/54558250-7246-11ec-acc6-876ece2ab4ec--w240_h140_lx9_rx503_ty0_by288.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-games">GAMES</span>
-                        </div>
-                        <h2><a href="games/noticia/01/2022/liga-brasileira-de-free-fire-volta-a-tv-aberta-em-2022.html" target="_self">Liga Brasileira de Free Fire volta a TV aberta em 2022</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/games/08"} />
                   </div>
                   <div className="card-advertising advertising-section esp-posicao-2 sec-posicao-2">
                     <div className="content-advertising">
@@ -1869,40 +1084,15 @@ export default function Home() {
                   <div className="col-md-8 col-lg-8">
                     <div className="row">
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/games/09">
-                          <a href="games/noticia/01/2022/pubg-esta-gratuito.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/251c2380-5c21-11ec-b72a-39f22a21918f--w116_h116_lx300_rx876_ty0_by576.jpg" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-games">GAMES</span>
-                            </div>
-                            <h2><a href="games/noticia/01/2022/pubg-esta-gratuito.html" target="_self">PUBG: BATTLEGROUNDS está gratuito para ser jogado. Recompensas para quem comprou.</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/games/09"} />
                       </div>
                       <div className="col-lg-12">
-                        <div className="card-theme card-model-2 ga-event-track" data-ga-event-label="editories/games/10">
-                          <a href="games/noticia/01/2022/gilles-monteil-homenagem.html" className="image-link" target="_self"><img className="lazy" data-original="https://assets.folhavitoria.com.br/images/2913c9b0-71fd-11ec-9fc0-7fb383ed6a85--w116_h116_lx227_rx479_ty0_by252.png" alt="" /></a>
-                          <div className="card-title">
-                            <div className="card-info">
-                              <span className="hat font-color-games">GAMES</span>
-                            </div>
-                            <h2><a href="games/noticia/01/2022/gilles-monteil-homenagem.html" target="_self">Gilles Monteil, ator das animações de games da Ubisoft é homenageado</a></h2>
-                          </div>
-                        </div>
+                        <Card02 findPosition={findPosition} coverItems={coverItems} position={"editories/games/10"} />
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4 col-lg-4">
-                    <div className="card-theme card-model-3 ga-event-track" data-ga-event-label="editories/games/11">
-                      <a href="games/noticia/01/2022/assinaturas-games.html" className="image-link" target="_self"><picture><img className="img-fluid lazy" data-original="https://assets.folhavitoria.com.br/images/202e1680-72d3-11ec-bb65-6bbe30fd4b9e--w240_h140_lx297_rx1503_ty0_by704.jpg" alt="" /></picture></a>
-                      <div className="card-title">
-                        <a href="#" className="button-more-click"></a>
-                        <div className="card-info">
-                          <span className="hat font-color-games">GAMES</span>
-                        </div>
-                        <h2><a href="games/noticia/01/2022/assinaturas-games.html" target="_self">Concorrente do GamePass? Ubisoft+ está chegando</a></h2>
-                      </div>
-                    </div>
+                    <Card03 findPosition={findPosition} coverItems={coverItems} position={"editories/games/11"} />
                   </div>
                 </div>
               </div>
