@@ -9486,3 +9486,168 @@ body.noscroll {
 		}
 	}
 }
+
+// @import 'partials/indicators'
+
+.indicator-section {
+	position: fixed;
+	top: 50%;
+	left: 20px;
+	z-index: 50;
+	margin-top: -140px;
+
+	@media only screen and (max-width: 1199px) {
+		left: 5px;
+	}
+
+	a {
+		margin-bottom: 20px;
+		position: relative;
+		color: #fff;
+		display: flex;
+		flex-direction: column;
+		font-size: 14px;
+		font-weight: $regular;
+		text-decoratin: none;
+
+		&.indicator--color-topo {
+			>span {
+				&:before {
+					background-color: $color-folha-light;
+				}
+			}
+		}
+		
+		&.indicator--color-geral {
+			>span {
+				&:before {
+					background-color: $color-geral-light;
+				}
+			}
+		}
+
+		&.indicator--color-entretenimento {
+			>span {
+				&:before {
+					background-color: $color-entretenimento-light;
+				}
+			}
+		}
+		
+		&.indicator--color-policia {
+			>span {
+				&:before {
+					background-color: $color-policia-light;
+				}
+			}
+		}
+		
+		&.indicator--color-politica {
+			>span {
+				&:before {
+					background-color: $color-politica-light;
+				}
+			}
+		}
+		&.indicator--color-trabalho {
+			>span {
+				&:before {
+					background-color: $color-trabalho-light;
+				}
+			}
+		}
+		
+		&.indicator--color-economia {
+			>span {
+				&:before {
+					background-color: $color-economia-light;
+				}
+			}
+		}
+		
+		&.indicator--color-esportes {
+			>span {
+				&:before {
+					background-color: $color-esporte-light;
+				}
+			}
+		}
+		
+		&.indicator--color-games {
+			>span {
+				&:before {
+					background-color: $color-games-light;
+				}
+			}
+		}
+		&.indicator--color-saude {
+			>span {
+				&:before {
+					background-color: $color-saude-light;
+				}
+			}
+		}
+
+
+		> span {
+			position: relative;
+			overflow: hidden;
+			width: 20px;
+			height: 20px;
+			padding-left: 20px;
+			border-radius: 100px;
+			-webkit-transition: width 0.2s ease 0s, padding-left 0.2s ease 0s;
+			-moz-transition: width 0.2s ease 0s, padding-left 0.2s ease 0s;
+			-ms-transition: width 0.2s ease 0s, padding-left 0.2s ease 0s;
+			-o-transition: width 0.2s ease 0s, padding-left 0.2s ease 0s;
+			transition: width 0.2s ease 0s, padding-left 0.2s ease 0s;
+
+			&:before {
+				content: "";
+				display: block;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				max-width: 100%;
+				left: 0;
+				top: 0;
+				z-index: 1;
+			}
+
+			span {
+				position: relative;
+				top: -1px;
+				z-index: 1;
+				padding-right: 25px;
+			}
+		}
+
+		&.indicator--active {
+			>span {
+				padding-left: 30px;
+			}
+		}
+
+		&:hover, &:active, &:focus {
+			text-decoration: none;
+		}
+
+		&:hover {
+			text-decoration: none;
+
+			&:before {
+				
+			}
+
+			>span {
+				width: 100%;
+				padding-left: 20px;
+			}
+		}
+
+	}
+
+	@media only screen and (max-width: 767px) {
+		display: none;
+	}
+}
